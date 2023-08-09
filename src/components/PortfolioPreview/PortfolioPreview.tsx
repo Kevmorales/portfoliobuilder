@@ -1,5 +1,7 @@
 import React from 'react';
 import './PortfolioPreview.module.css';
+import styles from '../../themes/themes.module.css';
+
 
 interface PersonalDetails {
   name: string;
@@ -25,11 +27,12 @@ interface Props {
   personalDetails: PersonalDetails;
   skills: Skill[];
   projects: Project[];
+  theme: 'classic' | 'modern';
 }
 
-const PortfolioPreview: React.FC<Props> = ({ personalDetails, skills, projects }) => {
+const PortfolioPreview: React.FC<Props> = ({ personalDetails, skills, projects, theme }) => {
   return (
-    <div>
+    <div className={styles[theme]}>
       <header>
         <h1>{personalDetails.name}</h1>
         <p>{personalDetails.bio}</p>
@@ -40,7 +43,7 @@ const PortfolioPreview: React.FC<Props> = ({ personalDetails, skills, projects }
         <h2>Skills</h2>
         <ul>
           {skills.map((skill, index) => (
-            <li key={index}>{skill.skillName}</li>
+            <li key={index}>{skill.name}</li>
           ))}
         </ul>
       </section>

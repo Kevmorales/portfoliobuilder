@@ -4,7 +4,7 @@ import { TextField, Button } from '@mui/material';
 interface Project {
   title: string;
   description: string;
-  image?: File;
+  image?: File | null;
   link?: string;
 }
 
