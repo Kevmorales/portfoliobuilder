@@ -1,7 +1,6 @@
-import React from 'react';
-import './PortfolioPreview.module.css';
-import styles from '../../themes/themes.module.css';
-
+import React from "react";
+import "./PortfolioPreview.module.css";
+import styles from "../../themes/themes.module.css";
 
 interface PersonalDetails {
   name: string;
@@ -11,10 +10,9 @@ interface PersonalDetails {
 }
 
 interface Skill {
-    name: string;
-    proficiency?: string;
-  }
-  
+  name: string;
+  proficiency?: string;
+}
 
 interface Project {
   title: string;
@@ -27,18 +25,41 @@ interface Props {
   personalDetails: PersonalDetails;
   skills: Skill[];
   projects: Project[];
-  theme: 'classic' | 'modern';
+  theme: "classic" | "modern";
 }
 
-const PortfolioPreview: React.FC<Props> = ({ personalDetails, skills, projects, theme }) => {
+const PortfolioPreview: React.FC<Props> = ({
+  personalDetails,
+  skills,
+  projects,
+  theme,
+}) => {
   return (
     <div className={styles[theme]}>
       <header>
-        <h1>{personalDetails.name}</h1>
-        <p>{personalDetails.bio}</p>
-        {/* Display profilePicture and resume link if provided */}
+        <div className={styles.profileContainer}>
+          {personalDetails.profilePicture && (
+            <img
+              src={URL.createObjectURL(personalDetails.profilePicture)}
+              alt="Profile"
+              className={styles.profileImage}
+            />
+          )}
+          <div>
+            <h1>{personalDetails.name}</h1>
+            <p>{personalDetails.bio}</p>
+          </div>
+        </div>
+        {personalDetails.resume && (
+          <a
+            href={URL.createObjectURL(personalDetails.resume)}
+            download="Resume"
+          >
+            Download Resume
+          </a>
+        )}
       </header>
-      
+
       <section>
         <h2>Skills</h2>
         <ul>
@@ -51,15 +72,26 @@ const PortfolioPreview: React.FC<Props> = ({ personalDetails, skills, projects, 
       <section>
         <h2>Projects</h2>
         {projects.map((project, index) => (
-          <div key={index}>
+          <div key={index} className={styles.projectCard}>
+            {project.image && (
+              <img
+                src={URL.createObjectURL(project.image)}
+                alt={project.title}
+                className={styles.projectImage}
+              />
+            )}
             <h3>{project.title}</h3>
             <p>{project.description}</p>
-            {/* Display project.image and project.link if provided */}
+            {project.link && (
+              <a href={project.link} target="_blank" rel="noopener noreferrer">
+                Visit Project
+              </a>
+            )}
           </div>
         ))}
       </section>
     </div>
   );
-}
+};
 
 export default PortfolioPreview;
